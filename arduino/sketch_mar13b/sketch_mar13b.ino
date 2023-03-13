@@ -25,7 +25,7 @@ void loop(){
   }
   else  {
     //else turn on the onboard LED
-    digitalWrite(Red, HIGH); // LED High
+    digitalWrite(Red, LOW); // LED High
     Serial.println("Motion Ended!"); // print Motion Ended! on the serial monitor window
   }
 }
