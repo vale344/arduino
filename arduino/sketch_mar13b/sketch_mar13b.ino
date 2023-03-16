@@ -2,7 +2,7 @@
 // red =power
 //orange= IRSensor
 #include <IRremote.hpp>
-
+#include <Arduino.h>
 
 
 int IRSensor = 7; // connect IR sensor module to Arduino pin D9
@@ -14,42 +14,57 @@ unsigned long key_value = 0;
 
 void setup(){
   //
+
   Serial.begin(9600); // Init Serial at 115200 Baud Rate.
   Serial.println("Serial Working"); // Test to check if serial is working or not
-  pinMode(IRSensor, INPUT); // IR Sensor pin INPUT
+  //pinMode(IRSensor, INPUT); // IR Sensor pin INPUT
   pinMode(LED, OUTPUT); // LED Pin Output
   pinMode(Red, OUTPUT); // LED Pin Output
-  IR.enableIRIn();
+  //IR.enableIRIn();
 }
 
 void loop(){
-  int sensorStatus = digitalRead(IRSensor); // Set the GPIO as Input
-  if (sensorStatus == 1) // Check if the pin high or not
-  {
+  
+  
+  
+  
+  
+  
+  
+  //int sensorStatus = digitalRead(IRSensor); // Set the GPIO as Input
+  //if (sensorStatus == 1) // Check if the pin high or not
+  //{
     // if the pin is high turn off the onboard Led
-    digitalWrite(Red, LOW); // LED LOW
-    Serial.println("Motion Detected!"); // print Motion Detected! on the serial monitor window
-   digitalWrite(LED, HIGH); // LED High
-  }
-  else  {
+   // digitalWrite(Red, LOW); // LED LOW
+   // Serial.println("Motion Detected!"); // print Motion Detected! on the serial monitor window
+   //digitalWrite(LED, HIGH); // LED High
+  //}
+  //else  {
     //else turn on the onboard LED
-    digitalWrite(Red, HIGH); // LED High
-    Serial.println("Motion Ended!"); // print Motion Ended! on the serial monitor window
-  }
+    //digitalWrite(Red, HIGH); // LED High
+   // Serial.println("Motion Ended!"); // print Motion Ended! on the serial monitor window
+ // }
 
   while (IR.decode(&results)==0){
 
   }
-  //if (IR.decode(&results)){
-  //  Serial.println(results.value, HEX);
-//delay(100);
+  if (IR.decode(&results)){
+    // hex kan mulige vis vikke udeneb
+  Serial.println(results.value,HEX );
+delay(100);
+}
 //IR.resume();
  if (IR.decode(&results)){
  
-        if (results.value == 0XFFFFFFFF)
+ if (results.value == 0XFFFFFFFF)
+     
           results.value = key_value;
-
-        switch(results.value){
+          Serial.println("CH-");
+        switch(results.value,HEX){
+        
+         case 0XFFFFFFFF:
+          Serial.println("T");
+          break;
           case 0xFFA25D:
           Serial.println("CH-");
           break;
@@ -113,6 +128,7 @@ void loop(){
           case 0xFF52AD:
           Serial.println("9");
           break ;      
+          
         }
         key_value = results.value;
         IR.resume(); 
