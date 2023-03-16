@@ -116,6 +116,7 @@ void loop() {
       }
       default: {
         Serial.println("Button not recognized");
+       
       }
  }
 
